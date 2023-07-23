@@ -109,7 +109,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\YorkiEngine\lib;E:\Projects\YorkieEngine\Libraries\glfw\glfw-3.3.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)x64\Debug;$(ProjectDir)Dependencies\YorkiEngine\lib;E:\Projects\YorkieEngine\Libraries\glfw\glfw-3.3.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;YorkieEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -128,7 +128,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\YorkiEngine\lib;E:\Projects\YorkieEngine\Libraries\glfw\glfw-3.3.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)x64\Debug;$(ProjectDir)Dependencies\YorkiEngine\lib;E:\Projects\YorkieEngine\Libraries\glfw\glfw-3.3.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;opengl32.lib;YorkieEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -141,6 +141,7 @@
     <ClInclude Include="SandboxApp.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\grid.shader" />
     <None Include="res\shaders\SecondSquare.shader" />
     <None Include="res\shaders\Square.shader" />
     <None Include="res\shaders\Triangle.shader" />

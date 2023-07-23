@@ -5,14 +5,15 @@
 #include "Rendering/RenderObject.h"
 #include <iostream>
 #include "Rendering/RenderingSystem.h"
+#include "Window/Public/WindowManager.h"
 
 SandboxApp::SandboxApp() : YorkiEngineApp()
 {
 }
 
-void SandboxApp::OnCreateApplication()
+void SandboxApp::OnCreateApplicationCallback()
 {
- 
+ /*
     Shader squareShader("res/shaders/Square.shader");
     Shader secondSquareShader("res/shaders/SecondSquare.shader");
     Shader triangleShader("res/shaders/Triangle.shader");
@@ -41,16 +42,20 @@ void SandboxApp::OnCreateApplication()
         5, 7, 6  // Second triangle (right square)
     };
 
-    std::vector<float> vertices = {
-    -0.5f, -0.8f, 0.0f,
-     0.5f, -0.8f, 0.0f,
-     0.0f,  0.5f, 0.0f
+    std::vector<float>vertices = {
+        // positions       
+         0.5f, -0.5f, 0.0f,// bottom right
+        -0.5f, -0.5f, 0.0f,// bottom left
+         0.0f,  0.5f, 0.0f,// top 
     };
 
-    RenderObject* firstSquare = new RenderObject(leftSquareVertices, indices, squareShader);
-    RenderObject* secondSquare = new RenderObject(rightSquareVertices, indices, secondSquareShader);
+    //RenderObject* firstSquare = new RenderObject(leftSquareVertices, indices, squareShader);
+    //RenderObject* secondSquare = new RenderObject(rightSquareVertices, indices, secondSquareShader);
     RenderObject* triangle = new RenderObject(vertices, triangleShader);
-    
+    //triangle->buffer.AddBufferData(vertices);
+
+    //triangle->AttachShader(triangleShader);
+        */
 }
 
 void SandboxApp::OnPreDraw()

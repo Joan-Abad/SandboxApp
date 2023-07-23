@@ -7,7 +7,7 @@ public:
 	SandboxApp();
 
 protected:
-	virtual void OnCreateApplication() override;
+	virtual void OnCreateApplicationCallback() override;
 	virtual void OnPreDraw() override;
 	virtual void OnPostDraw() override;
 };

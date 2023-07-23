@@ -43,5 +43,8 @@
     <None Include="res\shaders\Triangle.shader">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="res\shaders\grid.shader">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
