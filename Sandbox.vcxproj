@@ -146,6 +146,11 @@
     <None Include="res\shaders\Square.shader" />
     <None Include="res\shaders\Triangle.shader" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YorkieEngine\YorkieEngine.vcxproj">
+      <Project>{d6729329-abfc-4f1f-80ea-1126777d9c0d}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
