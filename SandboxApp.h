@@ -1,5 +1,6 @@
 #pragma once
 #include "Application/YorkiEngineApp.h"
+class RenderObject;
 
 class SandboxApp : public YorkiEngineApp
 {
@@ -10,5 +11,9 @@ protected:
 	virtual void OnCreateApplicationCallback() override;
 	virtual void OnPreDraw() override;
 	virtual void OnPostDraw() override;
+private: 
+	RenderObject* ro;
+	RenderObject* secondRo;
+	RenderObject* thirdRo;
 };
 
