@@ -4,11 +4,13 @@
 #include <vector>
 #include "Rendering/RenderObject.h"
 #include <iostream>
-#include "Rendering/RenderingSystem.h"
+#include "Rendering/Renderer.h"
 #include "Window/Public/WindowManager.h"
 #include "Window/Public/Viewport.h"
 #include "Rendering/Buffers/VBO.h"
 #include "Rendering/Buffers/VAO.h"
+#include "Logging/Public/Logger.h"
+#include "Components/TransformComponent.h"
 
 SandboxApp::SandboxApp() : YorkiEngineApp()
 {
@@ -105,8 +107,10 @@ void SandboxApp::OnCreateApplicationCallback()
         22, 23, 20
     };
 
+    
 
     Viewport& vp = WindowManager::GetActiveWindow<Viewport>();
+    input = new Controller(vp);
 
     ro = new RenderObject("Cube", cubeVertices, cubeIndices, *squareShader);
     vp.AddRenderObject(*ro);
@@ -119,21 +123,52 @@ void SandboxApp::OnCreateApplicationCallback()
     vp.AddRenderObject(*thirdRo);
     thirdRo->SetPosition(2,7,-2);
 
-    //triangle->buffer.AddBufferData(vertices);
-    ro->GetShader().Bind();
-    ro->GetShader().SetUniformVec4("color", { 0.48f, 0.25f, 0.75f, 1.0f });
-    ro->GetShader().Unbind(); 
+    auto &TC = ro->AddComponent<TransformComponent>();
+    TC.i = 14;
 
     thirdRo->GetShader().Bind();
-    thirdRo->GetShader().SetUniformVec4("color", { 1.0f,0.0f, 0.0f, 1.0f });
+    thirdRo->GetShader().SetUniformVec4("color", { 0.41f, 0.10f, 0.66f, 1.0f });
     thirdRo->GetShader().Unbind();
+
+    ro->GetShader().Bind();
+    ro->GetShader().SetUniformVec4("color", { 0.3f, 0.54f, 0.07f, 1.0f });
+    ro->GetShader().Unbind();
 }
 
 void SandboxApp::OnPreDraw()
 {
-    thirdRo->GetShader().Bind();
-    thirdRo->GetShader().SetUniformVec4("color", { sin(GetTime()), cos(GetTime()), 0.0f, 1.0f });
-    thirdRo->GetShader().Unbind();
+    
+    
+    if (input->IsKeyPressed(EKeyboardKeys::KEY_1))
+    {
+        thirdRo->GetShader().Bind();
+        thirdRo->GetShader().SetUniformVec4("color", { 1.0f, 0.0f, 0.0f, 1.0f });
+        thirdRo->GetShader().Unbind();
+    }
+    if (input->IsKeyPressed(EKeyboardKeys::KEY_2))
+    {
+        thirdRo->GetShader().Bind();
+        thirdRo->GetShader().SetUniformVec4("color", { 0.0f, 1.0f, 0.0f, 1.0f });
+        thirdRo->GetShader().Unbind();
+    }
+    if (input->IsKeyPressed(EKeyboardKeys::KEY_3))
+    {
+        thirdRo->GetShader().Bind();
+        thirdRo->GetShader().SetUniformVec4("color", {0.0f, 0.0f, 1.0f, 1.0f });
+        thirdRo->GetShader().Unbind();
+    }
+    if (input->IsKeyPressed(EKeyboardKeys::KEY_4))
+    {
+        thirdRo->GetShader().Bind();
+        thirdRo->GetShader().SetUniformVec4("color", { sin(GetTime()), cos(GetTime()), 0.0f, 1.0f });
+        thirdRo->GetShader().Unbind();
+    }
+    if (input->IsKeyPressed(EKeyboardKeys::KEY_J))
+        Logger::LogError("STOP");
+
+
+
+    
 }
 
 void SandboxApp::OnPostDraw()
