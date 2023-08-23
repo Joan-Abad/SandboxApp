@@ -4,13 +4,13 @@
 #include <vector>
 #include "Rendering/RenderObject.h"
 #include <iostream>
-#include "Rendering/Renderer.h"
 #include "Window/Public/WindowManager.h"
 #include "Window/Public/Viewport.h"
 #include "Rendering/Buffers/VBO.h"
 #include "Rendering/Buffers/VAO.h"
 #include "Logging/Public/Logger.h"
 #include "Components/TransformComponent.h"
+#include "Input/Input.h"
 
 SandboxApp::SandboxApp() : YorkiEngineApp()
 {
@@ -110,7 +110,7 @@ void SandboxApp::OnCreateApplicationCallback()
     
 
     Viewport& vp = WindowManager::GetActiveWindow<Viewport>();
-    input = new Controller(vp);
+    input = new Input(vp);
 
     ro = new RenderObject("Cube", cubeVertices, cubeIndices, *squareShader);
     vp.AddRenderObject(*ro);
@@ -123,8 +123,8 @@ void SandboxApp::OnCreateApplicationCallback()
     vp.AddRenderObject(*thirdRo);
     thirdRo->SetPosition(2,7,-2);
 
-    auto &TC = ro->AddComponent<TransformComponent>();
-    TC.i = 14;
+    //auto &TC = ro->AddComponent<TransformComponent>();
+    //TC.i = 14;
 
     thirdRo->GetShader().Bind();
     thirdRo->GetShader().SetUniformVec4("color", { 0.41f, 0.10f, 0.66f, 1.0f });

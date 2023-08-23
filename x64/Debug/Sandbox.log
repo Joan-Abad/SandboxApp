@@ -1,4 +1,8 @@
-﻿  SandboxApp.cpp
+﻿  glad.c
+  main.cpp
+E:\Projects\YorkieEngine\YorkieEngine\Application\YorkiEngineApp.h(5,17): warning C4099: 'GLFWwindow': type name first seen using 'struct' now seen using 'class'
+E:\Projects\YorkieEngine\Libraries\glfw\glfw-3.3.8\include\GLFW\glfw3.h(1185,16): message : see declaration of 'GLFWwindow'
+  SandboxApp.cpp
 E:\Projects\YorkieEngine\YorkieEngine\Application\YorkiEngineApp.h(5,17): warning C4099: 'GLFWwindow': type name first seen using 'struct' now seen using 'class'
 E:\Projects\YorkieEngine\Libraries\glfw\glfw-3.3.8\include\GLFW\glfw3.h(1185,16): message : see declaration of 'GLFWwindow'
 E:\Projects\YorkieEngine\Libraries\glad\include\glad\glad.h(326,1): warning C4005: 'GL_ALL_ATTRIB_BITS': macro redefinition
@@ -48,4 +52,5 @@ E:\Projects\YorkieEngine\YorkieEngine\Rendering\Buffers\VBO.h(6,17): message : s
 E:\Projects\YorkieEngine\YorkieEngine\Rendering\Buffers\VAO.h(6,1): warning C4275: non dll-interface class 'Buffer' used as base for dll-interface class 'VAO'
 E:\Projects\YorkieEngine\YorkieEngine\Rendering\Buffers\Buffer.h(18,7): message : see declaration of 'Buffer'
 E:\Projects\YorkieEngine\YorkieEngine\Rendering\Buffers\VAO.h(5,17): message : see declaration of 'VAO'
+  Generating Code...
   Sandbox.vcxproj -> E:\Projects\SandboxApp\x64\Debug\Sandbox.exe

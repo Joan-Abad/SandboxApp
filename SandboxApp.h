@@ -1,8 +1,8 @@
 #pragma once
 #include "Application/YorkiEngineApp.h"
-#include "Input/Controller.h"
 
 class RenderObject;
+class Input;
 
 class SandboxApp : public YorkiEngineApp
 {
@@ -17,6 +17,6 @@ private:
 	RenderObject* ro;
 	RenderObject* secondRo;
 	RenderObject* thirdRo;
-	Controller* input;
+	Input* input;
 };
 
