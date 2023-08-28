@@ -10,6 +10,7 @@
 #include "Graphics/Buffers/VAO.h"
 #include "Logging/Logger.h"
 #include "Components/TransformComponent.h"
+#include "Components/MeshComponent.h"
 #include "Input/Input.h"
 
 SandboxApp::SandboxApp() : YorkiEngineApp()
@@ -20,7 +21,7 @@ void SandboxApp::OnCreateApplicationCallback()
 {
     Shader* squareShader = new Shader("res/shaders/Cube.shader");
     Shader* secondSquareShader = new Shader("res/shaders/SecondCube.shader");
-
+    
     std::vector<Vertex> pyramidVertices = {
         // Base
         {glm::vec3(-0.5f, 0.0f, -0.5f)},
@@ -80,7 +81,7 @@ void SandboxApp::OnCreateApplicationCallback()
         Vertex(glm::vec3(0.5f, -0.5f,  0.5f)), // Top-right
         Vertex(glm::vec3(-0.5f, -0.5f,  0.5f))  // Top-left
     };
-
+    
     std::vector<unsigned int> cubeIndices = {
         // Front face
         0, 1, 2,
@@ -110,13 +111,19 @@ void SandboxApp::OnCreateApplicationCallback()
     Viewport& vp = WindowManager::GetActiveWindow<Viewport>();
     input = new Input(vp);
 
-    ro = vp.CreateEntity("Cube", cubeVertices, cubeIndices, *squareShader);
-    ro->SetPosition(-7,-4, -6);
+    GameEntity& entity = *vp.CreateEntity();
+    entity.SetEntityLocation(0,0,0);
+    entity.AddComponent<MeshComponent>(cubeVertices, cubeIndices);
+
+    //entity->objectName = "cube";
+    /*ro = vp.CreateEntity("Cube", cubeVertices, cubeIndices, *squareShader);
+    ro->SetEntityLocation(-7,-4, -6);
+    ro->AddComponent<TransformComponent>();
 
     secondRo = vp.CreateEntity("Cube2", cubeVertices, cubeIndices);
 
     thirdRo = vp.CreateEntity("Pyramid", pyramidVertices, pyramidIndices, *secondSquareShader);
-    thirdRo->SetPosition(2,7,-2);
+    thirdRo->SetEntityLocation(2,7,-2);
 
     thirdRo->GetShader().Bind();
     thirdRo->GetShader().SetUniformVec4("color", { 0.41f, 0.10f, 0.66f, 1.0f });
@@ -124,11 +131,13 @@ void SandboxApp::OnCreateApplicationCallback()
 
     ro->GetShader().Bind();
     ro->GetShader().SetUniformVec4("color", { 0.3f, 0.54f, 0.07f, 1.0f });
-    ro->GetShader().Unbind();
+    ro->GetShader().Unbind();*/
 }
 
-void SandboxApp::OnPreDraw()
+void SandboxApp::OnUpdate()
 {
+    YorkiEngineApp::OnUpdate();
+
     if (input->IsKeyPressed(EKeyboardKeys::KEY_1))
     {
         thirdRo->GetShader().Bind();
@@ -157,6 +166,6 @@ void SandboxApp::OnPreDraw()
         Logger::LogError("STOP");    
 }
 
-void SandboxApp::OnPostDraw()
+void SandboxApp::OnPostUpdate()
 {
 }

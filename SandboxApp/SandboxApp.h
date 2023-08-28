@@ -11,8 +11,8 @@ public:
 
 protected:
 	virtual void OnCreateApplicationCallback() override;
-	virtual void OnPreDraw() override;
-	virtual void OnPostDraw() override;
+	virtual void OnUpdate() override;
+	virtual void OnPostUpdate() override;
 private: 
 	GameEntity* ro;
 	GameEntity* secondRo;
