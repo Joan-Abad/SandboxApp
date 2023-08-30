@@ -4,7 +4,7 @@
 class GameEntity;
 class Input;
 
-class SandboxApp : public YorkiEngineApp
+class SandboxApp : public YorkieEngineApp
 {
 public:
 	SandboxApp();
@@ -14,9 +14,9 @@ protected:
 	virtual void OnUpdate() override;
 	virtual void OnPostUpdate() override;
 private: 
-	GameEntity* ro;
+	GameEntity* rE;
 	GameEntity* secondRo;
-	GameEntity* thirdRo;
+	GameEntity* thirdRE;
 	Input* input;
 };
 

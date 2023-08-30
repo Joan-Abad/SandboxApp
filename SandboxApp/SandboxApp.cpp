@@ -13,15 +13,19 @@
 #include "Components/MeshComponent.h"
 #include "Input/Input.h"
 
-SandboxApp::SandboxApp() : YorkiEngineApp()
+SandboxApp::SandboxApp() : YorkieEngineApp()
 {
 }
 
 void SandboxApp::OnCreateApplicationCallback()
 {
-    Shader* squareShader = new Shader("res/shaders/Cube.shader");
+    Shader* uniformColorShader = new Shader("res/shaders/Cube.shader");
+    Shader* secondCubeColorShader = new Shader("res/shaders/Cube.shader");
     Shader* secondSquareShader = new Shader("res/shaders/SecondCube.shader");
-    
+    Shader* defaultShader = new Shader("res/shaders/default.shader");
+    Shader* secondDefaultShader = new Shader("res/shaders/secondTexture.shader");
+    Shader* thirdDefaultShader = new Shader("res/shaders/ThirdTexture.shader");
+
     std::vector<Vertex> pyramidVertices = {
         // Base
         {glm::vec3(-0.5f, 0.0f, -0.5f)},
@@ -111,56 +115,60 @@ void SandboxApp::OnCreateApplicationCallback()
     Viewport& vp = WindowManager::GetActiveWindow<Viewport>();
     input = new Input(vp);
 
+    TextureComponent* textureComponent = new TextureComponent(std::string("res/textures/Jolie.jpg"));
+    textureComponent->AttachShader(*defaultShader);
+
+    TextureComponent* secondTextureComponent = new TextureComponent(std::string("res/textures/mario64.jpg"));
+    secondTextureComponent->AttachShader(*secondDefaultShader);
+    
+    TextureComponent* thirdTextureComponent = new TextureComponent(std::string("res/textures/eevee.jpg"));
+    thirdTextureComponent->AttachShader(*thirdDefaultShader);
+
     GameEntity& entity = *vp.CreateEntity();
-    entity.SetEntityLocation(0,0,0);
-    entity.AddComponent<MeshComponent>(cubeVertices, cubeIndices);
+    entity.SetEntityLocation(3,4,-8);
+    entity.AttachShader(defaultShader);
+    entity.AddComponent<MeshComponent>(cubeVertices, cubeIndices, textureComponent);
+    entity.entityName = "Cube default 1";
 
-    //entity->objectName = "cube";
-    /*ro = vp.CreateEntity("Cube", cubeVertices, cubeIndices, *squareShader);
-    ro->SetEntityLocation(-7,-4, -6);
-    ro->AddComponent<TransformComponent>();
+    GameEntity& secondDefaultEntity = *vp.CreateEntity();
+    secondDefaultEntity.SetEntityLocation(-5, 3, -4);
+    secondDefaultEntity.AttachShader(secondDefaultShader);
+    secondDefaultEntity.AddComponent<MeshComponent>(cubeVertices, cubeIndices, secondTextureComponent);
+    secondDefaultEntity.entityName = "Cube default 2";
 
-    secondRo = vp.CreateEntity("Cube2", cubeVertices, cubeIndices);
-
-    thirdRo = vp.CreateEntity("Pyramid", pyramidVertices, pyramidIndices, *secondSquareShader);
-    thirdRo->SetEntityLocation(2,7,-2);
-
-    thirdRo->GetShader().Bind();
-    thirdRo->GetShader().SetUniformVec4("color", { 0.41f, 0.10f, 0.66f, 1.0f });
-    thirdRo->GetShader().Unbind();
-
-    ro->GetShader().Bind();
-    ro->GetShader().SetUniformVec4("color", { 0.3f, 0.54f, 0.07f, 1.0f });
-    ro->GetShader().Unbind();*/
+    GameEntity& thirdDefaultEntity = *vp.CreateEntity();
+    thirdDefaultEntity.SetEntityLocation(2, 10, 3);
+    thirdDefaultEntity.AddComponent<MeshComponent>(cubeVertices, cubeIndices, thirdTextureComponent);
+    thirdDefaultEntity.AttachShader(thirdDefaultShader);
+    thirdDefaultEntity.entityName = "Cube default 3";
 }
 
 void SandboxApp::OnUpdate()
 {
-    YorkiEngineApp::OnUpdate();
-
+    YorkieEngineApp::OnUpdate();
     if (input->IsKeyPressed(EKeyboardKeys::KEY_1))
     {
-        thirdRo->GetShader().Bind();
-        thirdRo->GetShader().SetUniformVec4("color", { 1.0f, 0.0f, 0.0f, 1.0f });
-        thirdRo->GetShader().Unbind();
+        thirdRE->GetShader().Bind();
+        thirdRE->GetShader().SetUniformVec4("color", { 1.0f, 0.0f, 0.0f, 1.0f });
+        thirdRE->GetShader().Unbind();
     }
     if (input->IsKeyPressed(EKeyboardKeys::KEY_2))
     {
-        thirdRo->GetShader().Bind();
-        thirdRo->GetShader().SetUniformVec4("color", { 0.0f, 1.0f, 0.0f, 1.0f });
-        thirdRo->GetShader().Unbind();
+        thirdRE->GetShader().Bind();
+        thirdRE->GetShader().SetUniformVec4("color", { 0.0f, 1.0f, 0.0f, 1.0f });
+        thirdRE->GetShader().Unbind();
     }
     if (input->IsKeyPressed(EKeyboardKeys::KEY_3))
     {
-        thirdRo->GetShader().Bind();
-        thirdRo->GetShader().SetUniformVec4("color", {0.0f, 0.0f, 1.0f, 1.0f });
-        thirdRo->GetShader().Unbind();
+        thirdRE->GetShader().Bind();
+        thirdRE->GetShader().SetUniformVec4("color", {0.0f, 0.0f, 1.0f, 1.0f });
+        thirdRE->GetShader().Unbind();
     }
     if (input->IsKeyPressed(EKeyboardKeys::KEY_4))
     {
-        thirdRo->GetShader().Bind();
-        thirdRo->GetShader().SetUniformVec4("color", { sin(GetTime()), cos(GetTime()), 0.0f, 1.0f });
-        thirdRo->GetShader().Unbind();
+        thirdRE->GetShader().Bind();
+        thirdRE->GetShader().SetUniformVec4("color", { sin(GetGameTime()), cos(GetGameTime()), 0.0f, 1.0f });
+        thirdRE->GetShader().Unbind();
     }
     if (input->IsKeyPressed(EKeyboardKeys::KEY_J))
         Logger::LogError("STOP");    
