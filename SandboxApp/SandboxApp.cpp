@@ -12,6 +12,8 @@
 #include "Components/TransformComponent.h"
 #include "Components/MeshComponent.h"
 #include "Input/Input.h"
+#include "Lighting/BasicLight.h"
+#include "Graphics/Primitives/Cube.h"
 
 SandboxApp::SandboxApp() : YorkieEngineApp()
 {
@@ -19,10 +21,9 @@ SandboxApp::SandboxApp() : YorkieEngineApp()
 
 void SandboxApp::OnCreateApplicationCallback()
 {
-    Shader* uniformColorShader = new Shader("res/shaders/Cube.shader");
-    Shader* secondCubeColorShader = new Shader("res/shaders/Cube.shader");
-    Shader* secondSquareShader = new Shader("res/shaders/SecondCube.shader");
     Shader* defaultShader = new Shader("res/shaders/default.shader");
+
+    //Shader* firstTextureShader = new Shader("res/shaders/CubeTexture.shader");
     Shader* secondDefaultShader = new Shader("res/shaders/secondTexture.shader");
     Shader* thirdDefaultShader = new Shader("res/shaders/ThirdTexture.shader");
 
@@ -51,39 +52,39 @@ void SandboxApp::OnCreateApplicationCallback()
 
     std::vector<Vertex> cubeVertices = {
         // Front face
-        Vertex(glm::vec3(-0.5f, -0.5f,  0.5f)), // Bottom-left
-        Vertex(glm::vec3(0.5f, -0.5f,  0.5f)), // Bottom-right
-        Vertex(glm::vec3(0.5f,  0.5f,  0.5f)), // Top-right
-        Vertex(glm::vec3(-0.5f,  0.5f,  0.5f)), // Top-left
+        Vertex(glm::vec3(-0.5f, -0.5f,  0.5f),  glm::vec3(0.0f, 0.0f, 1.0f)), // Bottom-left
+        Vertex(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec3(0.0f, 0.0f, 1.0f)), // Bottom-right
+        Vertex(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec3(0.0f, 0.0f, 1.0f)), // Top-right
+        Vertex(glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec3(0.0f, 0.0f, 1.0f)), // Top-left
 
-        Vertex(glm::vec3(-0.5f, -0.5f, -0.5f)), // Bottom-left
-        Vertex(glm::vec3(0.5f, -0.5f, -0.5f)), // Bottom-right
-        Vertex(glm::vec3(0.5f,  0.5f, -0.5f)), // Top-right
-        Vertex(glm::vec3(-0.5f,  0.5f, -0.5f)), // Top-left
-        
-        // Right face
-        Vertex(glm::vec3(0.5f, -0.5f,  0.5f)), // Bottom-left
-        Vertex(glm::vec3(0.5f, -0.5f, -0.5f)), // Bottom-right
-        Vertex(glm::vec3(0.5f,  0.5f, -0.5f)), // Top-right
-        Vertex(glm::vec3(0.5f,  0.5f,  0.5f)), // Top-left
-        
-        // Left face
-        Vertex(glm::vec3(-0.5f, -0.5f, -0.5f)), // Bottom-left
-        Vertex(glm::vec3(-0.5f, -0.5f,  0.5f)), // Bottom-right
-        Vertex(glm::vec3(-0.5f,  0.5f,  0.5f)), // Top-right
-        Vertex(glm::vec3(-0.5f,  0.5f, -0.5f)), // Top-left
+        Vertex(glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec3(0.0f, 0.0f, -1.0f)), // Bottom-left
+        Vertex(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec3(0.0f, 0.0f, -1.0f)), // Bottom-right
+        Vertex(glm::vec3(0.5f,  0.5f, -0.5f),   glm::vec3(0.0f, 0.0f, -1.0f)), // Top-right
+        Vertex(glm::vec3(-0.5f,  0.5f, -0.5f),  glm::vec3(0.0f, 0.0f, -1.0f)), // Top-left
 
-        // Top face
-        Vertex(glm::vec3(-0.5f,  0.5f,  0.5f)), // Bottom-left
-        Vertex(glm::vec3(0.5f,  0.5f,  0.5f)), // Bottom-right
-        Vertex(glm::vec3(0.5f,  0.5f, -0.5f)), // Top-right
-        Vertex(glm::vec3(-0.5f,  0.5f, -0.5f)), // Top-left
+        // Right face                          
+        Vertex(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec3(1.0f, 0.0f, 0.0f)), // Bottom-left
+        Vertex(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec3(1.0f, 0.0f, 0.0f)), // Bottom-right
+        Vertex(glm::vec3(0.5f,  0.5f, -0.5f),  glm::vec3(1.0f, 0.0f, 0.0f)), // Top-right
+        Vertex(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec3(1.0f, 0.0f, 0.0f)), // Top-left
 
-        // Bottom face
-        Vertex(glm::vec3(-0.5f, -0.5f, -0.5f)), // Bottom-left
-        Vertex(glm::vec3(0.5f, -0.5f, -0.5f)), // Bottom-right
-        Vertex(glm::vec3(0.5f, -0.5f,  0.5f)), // Top-right
-        Vertex(glm::vec3(-0.5f, -0.5f,  0.5f))  // Top-left
+        // Left face                            
+        Vertex(glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec3(-1.0f, 0.0f, 0.0f)), // Bottom-left
+        Vertex(glm::vec3(-0.5f, -0.5f,  0.5f),  glm::vec3(-1.0f, 0.0f, 0.0f)), // Bottom-right
+        Vertex(glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec3(-1.0f, 0.0f, 0.0f)), // Top-right
+        Vertex(glm::vec3(-0.5f,  0.5f, -0.5f),  glm::vec3(-1.0f, 0.0f, 0.0f)), // Top-left
+
+        // Top face                             
+        Vertex(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3(0.0f, 1.0f, 0.0f)), // Bottom-left
+        Vertex(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec3(0.0f, 1.0f, 0.0f)), // Bottom-right
+        Vertex(glm::vec3(0.5f,  0.5f, -0.5f),  glm::vec3(0.0f, 1.0f, 0.0f)), // Top-right
+        Vertex(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(0.0f, 1.0f, 0.0f)), // Top-left
+
+        // Bottom face                          
+        Vertex(glm::vec3(-0.5f, -0.5f, -0.5f),   glm::vec3(0.0f, -1.0f, 0.0f)),  // Bottom-left
+        Vertex(glm::vec3(0.5f, -0.5f, -0.5f),    glm::vec3(0.0f, -1.0f, 0.0f)),  // Bottom-right
+        Vertex(glm::vec3(0.5f, -0.5f,  0.5f),    glm::vec3(0.0f, -1.0f, 0.0f)),   // Top-right
+        Vertex(glm::vec3(-0.5f, -0.5f,  0.5f),   glm::vec3(0.0f, -1.0f, 0.0f))   // Top-left
     };
     
     std::vector<unsigned int> cubeIndices = {
@@ -115,63 +116,128 @@ void SandboxApp::OnCreateApplicationCallback()
     Viewport& vp = WindowManager::GetActiveWindow<Viewport>();
     input = new Input(vp);
 
-    TextureComponent* textureComponent = new TextureComponent(std::string("res/textures/Jolie.jpg"));
-    textureComponent->AttachShader(*defaultShader);
+    //First Texture
+
+    TextureComponent* jolieTexture = new TextureComponent(std::string("res/textures/Jolie.jpg"));
+    jolieTexture->AttachShader(*secondDefaultShader);
+
+    TextureComponent* floorTexture = new TextureComponent(std::string("res/textures/floor.jpg"));
+    floorTexture->AttachShader(*secondDefaultShader);
+
+    //Second Texture
 
     TextureComponent* secondTextureComponent = new TextureComponent(std::string("res/textures/mario64.jpg"));
     secondTextureComponent->AttachShader(*secondDefaultShader);
     
-    TextureComponent* thirdTextureComponent = new TextureComponent(std::string("res/textures/eevee.jpg"));
-    thirdTextureComponent->AttachShader(*thirdDefaultShader);
+    //Third Texture
 
-    GameEntity& entity = *vp.CreateEntity();
-    entity.SetEntityLocation(3,4,-8);
-    entity.AttachShader(defaultShader);
-    entity.AddComponent<MeshComponent>(cubeVertices, cubeIndices, textureComponent);
-    entity.entityName = "Cube default 1";
+    //TextureComponent* thirdTextureComponent = new TextureComponent(std::string("res/textures/eevee.jpg"));
+    //thirdTextureComponent->AttachShader(*thirdDefaultShader);
 
-    GameEntity& secondDefaultEntity = *vp.CreateEntity();
-    secondDefaultEntity.SetEntityLocation(-5, 3, -4);
-    secondDefaultEntity.AttachShader(secondDefaultShader);
-    secondDefaultEntity.AddComponent<MeshComponent>(cubeVertices, cubeIndices, secondTextureComponent);
-    secondDefaultEntity.entityName = "Cube default 2";
+    //First Game Entity
 
-    GameEntity& thirdDefaultEntity = *vp.CreateEntity();
-    thirdDefaultEntity.SetEntityLocation(2, 10, 3);
-    thirdDefaultEntity.AddComponent<MeshComponent>(cubeVertices, cubeIndices, thirdTextureComponent);
-    thirdDefaultEntity.AttachShader(thirdDefaultShader);
-    thirdDefaultEntity.entityName = "Cube default 3";
+    jolieCubeEntity = vp.CreateEntity<>();
+    jolieCubeEntity->SetLocation(3,4,-8);
+    jolieCubeEntity->AttachShader(secondDefaultShader);
+    jolieCubeEntity->AddComponent<MeshComponent>(cubeVertices, cubeIndices, jolieTexture);
+    jolieCubeEntity->entityName = "Jolie cube";
+    jolieCubeEntity->SetScale(3,3,3);
+
+
+    //Third Game Entity
+    /*
+   thirdTexturedEntity = vp.CreateEntity();
+   thirdTexturedEntity->SetLocation(2, 10, 3);
+   thirdTexturedEntity->AddComponent<MeshComponent>(cubeVertices, cubeIndices, thirdTextureComponent);
+   thirdTexturedEntity->AttachShader(thirdDefaultShader);
+   thirdTexturedEntity->entityName = "Eevee cube";
+   */
+
+    m_floor = vp.CreateEntity();
+    m_floor->SetScale(50, 1, 50);
+    m_floor->AttachShader(secondDefaultShader);
+    m_floor->AddComponent<MeshComponent>(cubeVertices, cubeIndices, floorTexture);
+    m_floor->entityName = "Floor";
+
+
+    //Second Game Entity
+   secondTexturedEntity = vp.CreateEntity();
+   secondTexturedEntity->SetLocation(-5, 3, -4);
+   secondTexturedEntity->AttachShader(secondDefaultShader);
+   secondTexturedEntity->AddComponent<MeshComponent>(cubeVertices, cubeIndices, secondTextureComponent);
+   secondTexturedEntity->entityName = "Mario64 cube";
+   
+
+   m_BasicLight = vp.CreateEntity<BasicLight>();
+   m_BasicLight->SetLocation(-10, 6, -2);
+   secondTexturedEntity->m_basicLight = dynamic_cast<BasicLight*>(m_BasicLight);
+   /*
+    //Fourth Entity
+    gE = vp.CreateEntity();
+    gE->SetLocation(0, 0, 0);
+    gE->AddComponent<MeshComponent>(cubeVertices, cubeIndices);
+    gE->AttachShader(defaultShader);
+    gE->entityName = "Default cube";
+    */
 }
 
-void SandboxApp::OnUpdate()
+void SandboxApp::OnUpdate(float deltaTime)
 {
-    YorkieEngineApp::OnUpdate();
+    YorkieEngineApp::OnUpdate(deltaTime);
+    glm::vec3 moveSpeed = glm::vec3(5.0f, 0.0f, 0.0f) * deltaTime;
+    glm::vec3 scale = glm::vec3(3.0f, 1.0f, 1.0f);
+
+    double getTimeX = cos(GetGameTime()) * 360;
+    double getTimeY = sin(GetGameTime()) * 360;
+
+    if(input->IsKeyPressed(EKeyboardKeys::KEY_1))
+        secondTexturedEntity->m_basicLight->m_lightColor = glm::vec3(0.36, 0.76, 0.92);
+    else if (input->IsKeyPressed(EKeyboardKeys::KEY_2))
+        secondTexturedEntity->m_basicLight->m_lightColor = glm::vec3(0.83, 0.26, 0.26);
+    else if (input->IsKeyPressed(EKeyboardKeys::KEY_3))
+        secondTexturedEntity->m_basicLight->m_lightColor = glm::vec3(0.43, 0.86, 0.40);
+    else if (input->IsKeyPressed(EKeyboardKeys::KEY_4))
+        secondTexturedEntity->m_basicLight->m_lightColor = glm::vec3(0.96, 0.93, 0.34);
+    else
+        secondTexturedEntity->m_basicLight->m_lightColor = glm::vec3(1.0, 1.0, 1.0);
+
+    
+
+    if (m_BasicLight->GetPosition().x > 15)
+        lightSpeed = -15;
+    if(m_BasicLight->GetPosition().x < -15)
+        lightSpeed = 15;
+
+    m_BasicLight->AddOffstet(lightSpeed*deltaTime, 0, 0);
+
+    jolieCubeEntity->SetRotation(getTimeX, getTimeY, 1);
+
+    /*
     if (input->IsKeyPressed(EKeyboardKeys::KEY_1))
     {
-        thirdRE->GetShader().Bind();
-        thirdRE->GetShader().SetUniformVec4("color", { 1.0f, 0.0f, 0.0f, 1.0f });
-        thirdRE->GetShader().Unbind();
+        texturedEntity->SetLocation(moveSpeed);
     }
     if (input->IsKeyPressed(EKeyboardKeys::KEY_2))
     {
-        thirdRE->GetShader().Bind();
-        thirdRE->GetShader().SetUniformVec4("color", { 0.0f, 1.0f, 0.0f, 1.0f });
-        thirdRE->GetShader().Unbind();
+        texturedEntity->SetScale(scale);
     }
-    if (input->IsKeyPressed(EKeyboardKeys::KEY_3))
-    {
-        thirdRE->GetShader().Bind();
-        thirdRE->GetShader().SetUniformVec4("color", {0.0f, 0.0f, 1.0f, 1.0f });
-        thirdRE->GetShader().Unbind();
-    }
-    if (input->IsKeyPressed(EKeyboardKeys::KEY_4))
-    {
-        thirdRE->GetShader().Bind();
-        thirdRE->GetShader().SetUniformVec4("color", { sin(GetGameTime()), cos(GetGameTime()), 0.0f, 1.0f });
-        thirdRE->GetShader().Unbind();
-    }
-    if (input->IsKeyPressed(EKeyboardKeys::KEY_J))
-        Logger::LogError("STOP");    
+
+    texturedEntity->AddOffstet(getTimeX * deltaTime, getTimeY * deltaTime, 0);
+    texturedEntity->SetScale(2, 2, 2);
+
+    //Second textured entity 
+
+    float rot = 90 * deltaTime;
+    secondTexturedEntity->AddRotation(rot, rot, rot);
+    secondTexturedEntity->SetScale(2, 2, 2);
+
+    //Third textured entity
+
+    float scaleX = cos(GetGameTime()) * 2;
+    float scaleY = sin(GetGameTime()) * 3;
+    thirdTexturedEntity->SetScale(scaleX, scaleY, 1.5);
+        */
+
 }
 
 void SandboxApp::OnPostUpdate()

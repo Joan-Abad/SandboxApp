@@ -43,11 +43,32 @@
     <None Include="res\shaders\grid.shader">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="res\shaders\Cube.shader">
+    <None Include="res\shaders\CubeTexture.shader">
       <Filter>Shaders</Filter>
     </None>
     <None Include="res\shaders\default.shader">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="res\shaders\defaultLight.shader" />
+    <None Include="res\shaders\SecondCube.shader" />
+    <None Include="res\shaders\secondTexture.shader" />
+    <None Include="res\shaders\ThirdTexture.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\eevee.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\Jolie.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\mario64.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\textures\zelda.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

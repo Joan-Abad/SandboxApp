@@ -148,11 +148,15 @@
     <ClInclude Include="SandboxApp.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\Cube.shader" />
+    <None Include="res\shaders\CubeTexture.shader" />
     <None Include="res\shaders\default.shader" />
+    <None Include="res\shaders\defaultLight.shader" />
     <None Include="res\shaders\grid.shader" />
+    <None Include="res\shaders\SecondCube.shader" />
     <None Include="res\shaders\SecondSquare.shader" />
+    <None Include="res\shaders\secondTexture.shader" />
     <None Include="res\shaders\Square.shader" />
+    <None Include="res\shaders\ThirdTexture.shader" />
     <None Include="res\shaders\Triangle.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +166,13 @@
     <ProjectReference Include="..\..\YorkieEngine\YorkieEngine\YorkieEngine.vcxproj">
       <Project>{d6729329-abfc-4f1f-80ea-1126777d9c0d}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\textures\container.jpg" />
+    <Image Include="res\textures\eevee.jpg" />
+    <Image Include="res\textures\Jolie.jpg" />
+    <Image Include="res\textures\mario64.jpg" />
+    <Image Include="res\textures\zelda.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
