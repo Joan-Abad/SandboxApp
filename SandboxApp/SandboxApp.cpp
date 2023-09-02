@@ -169,7 +169,7 @@ void SandboxApp::OnCreateApplicationCallback()
    
 
    m_BasicLight = vp.CreateEntity<BasicLight>();
-   m_BasicLight->SetLocation(-10, 6, -2);
+   m_BasicLight->SetLocation(-10, 2, -2);
    secondTexturedEntity->m_basicLight = dynamic_cast<BasicLight*>(m_BasicLight);
    /*
     //Fourth Entity
